@@ -17,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import static com.kidzoo.toydetails.common.test.CommonMethods.readFile;
@@ -118,6 +120,18 @@ class ToydetailsServiceImplTest {
 			List<ToyStatusById> toyStatusById = toyDetailsServiceimpl.getListOfToysByStatus("outofstock");
 			Assert.assertEquals("outofstock",toyStatusById.get(0).getStatus());
 			Assert.assertEquals(1010,toyStatusById.get(0).getId());
+		} catch (Exception e) {
+		}
+	}
+	@Test
+	void getAllToysInBasketTest() {
+		try {
+			String toyDetails = new String(readFile("\\rest-mock\\getAllToysInBasket.json"));
+			ToyDetailsResponse toyDetailsResponseMapper = mapper.readValue(toyDetails, ToyDetailsResponse.class);
+			given(toyDetailsServiceimpl.getListOfToysInBasket(1000 , "10")).equals(toyDetailsResponseMapper);
+			ToyDetailsResponse toyDetailsResponse = toyDetailsServiceimpl.getToyDetails();
+			Assert.assertEquals(1000, toyDetailsResponse.getToyDetailsList().get(0).getId());
+			Assert.assertEquals(new BigDecimal(10), toyDetailsResponse.getToyDetailsList().get(0).getPrice());
 		} catch (Exception e) {
 		}
 	}

@@ -39,28 +39,29 @@ class ToydetailsControllerTest {
 			ToyDetailsResponse toyDetailsResponseMapper = mapper.readValue(toyDetails, ToyDetailsResponse.class);
 			given(toyDetailsServiceimpl.getToyDetails()).willReturn(toyDetailsResponseMapper);
 			ToyDetailsResponse toyDetailsResponse = toyDetailsController.getToyDetails();
-			Assert.assertEquals(1000,toyDetailsResponse.getToyDetailsList().get(0).getId());
-			Assert.assertEquals(new BigDecimal(10),toyDetailsResponse.getToyDetailsList().get(0).getPrice());
-			Assert.assertEquals("3",toyDetailsResponse.getToyDetailsList().get(0).getAge());
-			Assert.assertEquals("Car",toyDetailsResponse.getToyDetailsList().get(0).getName());
-			Assert.assertEquals("src/media/Car.jpg",toyDetailsResponse.getToyDetailsList().get(0).getImageURL());
+			Assert.assertEquals(1000, toyDetailsResponse.getToyDetailsList().get(0).getId());
+			Assert.assertEquals(new BigDecimal(10), toyDetailsResponse.getToyDetailsList().get(0).getPrice());
+			Assert.assertEquals("3", toyDetailsResponse.getToyDetailsList().get(0).getAge());
+			Assert.assertEquals("Car", toyDetailsResponse.getToyDetailsList().get(0).getName());
+			Assert.assertEquals("src/media/Car.jpg", toyDetailsResponse.getToyDetailsList().get(0).getImageURL());
 		} catch (Exception e) {
 		}
 	}
 
 	@Test
-	void getToyDetailsBasedOnPriceRangeTest(){
-		try{
+	void getToyDetailsBasedOnPriceRangeTest() {
+		try {
 			String toyDetails = new String(readFile("\\rest-mock\\getToyDetailsBasedOnPriceRange.json"));
 			ToyDetailsResponse toyDetailsResponseMapper = mapper.readValue(toyDetails, ToyDetailsResponse.class);
-			given(toyDetailsServiceimpl.getToyDetailsBasedOnPriceRange(ArgumentMatchers.any(),ArgumentMatchers.any())).willReturn(toyDetailsResponseMapper);
-			ToyDetailsResponse toyDetailsResponse = toyDetailsController.getToyDetailsBasedOnPriceRange("5","15");
-			Assert.assertEquals(1000,toyDetailsResponse.getToyDetailsList().get(0).getId());
-			Assert.assertEquals(new BigDecimal(10),toyDetailsResponse.getToyDetailsList().get(0).getPrice());
-			Assert.assertEquals("3",toyDetailsResponse.getToyDetailsList().get(0).getAge());
-			Assert.assertEquals("Car",toyDetailsResponse.getToyDetailsList().get(0).getName());
-			Assert.assertEquals("src/media/Car.jpg",toyDetailsResponse.getToyDetailsList().get(0).getImageURL());
-		}catch(Exception e){}
+			given(toyDetailsServiceimpl.getToyDetailsBasedOnPriceRange(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(toyDetailsResponseMapper);
+			ToyDetailsResponse toyDetailsResponse = toyDetailsController.getToyDetailsBasedOnPriceRange("5", "15");
+			Assert.assertEquals(1000, toyDetailsResponse.getToyDetailsList().get(0).getId());
+			Assert.assertEquals(new BigDecimal(10), toyDetailsResponse.getToyDetailsList().get(0).getPrice());
+			Assert.assertEquals("3", toyDetailsResponse.getToyDetailsList().get(0).getAge());
+			Assert.assertEquals("Car", toyDetailsResponse.getToyDetailsList().get(0).getName());
+			Assert.assertEquals("src/media/Car.jpg", toyDetailsResponse.getToyDetailsList().get(0).getImageURL());
+		} catch (Exception e) {
+		}
 	}
 
 	@Test
@@ -71,22 +72,24 @@ class ToydetailsControllerTest {
 			toyStatusById.setStatus("available");
 			given(toyDetailsServiceimpl.getToyStatusById(ArgumentMatchers.anyInt())).willReturn(toyStatusById);
 			ToyStatusById toyStatusByIdResp = toyDetailsController.getToyStatusById(1000);
-			Assert.assertEquals(1000,toyStatusByIdResp.getId());
-			Assert.assertEquals("available",toyStatusByIdResp.getStatus());
+			Assert.assertEquals(1000, toyStatusByIdResp.getId());
+			Assert.assertEquals("available", toyStatusByIdResp.getStatus());
 		} catch (Exception e) {
 		}
 	}
-		@Test
-		void getToyDetailsByStatusAvailableTest() {
-			try {
-				String available = new String(CommonMethods.readFile("\\rest-mock\\getAllToyListByStatusAvailable.json"));
-				List<ToyStatusById> toyDetailsResponse = mapper.readValue(available, new TypeReference<List<ToyStatusById>>(){});
-				given(toyDetailsServiceimpl.getListOfToysByStatus(ArgumentMatchers.any())).willReturn(toyDetailsResponse);
-				List<ToyStatusById> toyStatusById = toyDetailsController.getToyListByStatus("available");
-				Assert.assertEquals("available",toyStatusById.get(0).getStatus());
-				Assert.assertEquals(1000,toyStatusById.get(0).getId());
-			} catch (Exception e) {
-			}
+
+	@Test
+	void getToyDetailsByStatusAvailableTest() {
+		try {
+			String available = new String(CommonMethods.readFile("\\rest-mock\\getAllToyListByStatusAvailable.json"));
+			List<ToyStatusById> toyDetailsResponse = mapper.readValue(available, new TypeReference<List<ToyStatusById>>() {
+			});
+			given(toyDetailsServiceimpl.getListOfToysByStatus(ArgumentMatchers.any())).willReturn(toyDetailsResponse);
+			List<ToyStatusById> toyStatusById = toyDetailsController.getToyListByStatus("available");
+			Assert.assertEquals("available", toyStatusById.get(0).getStatus());
+			Assert.assertEquals(1000, toyStatusById.get(0).getId());
+		} catch (Exception e) {
+		}
 	}
 
 
@@ -94,11 +97,12 @@ class ToydetailsControllerTest {
 	void getToyDetailsByStatusBackOrderTest() {
 		try {
 			String backOrder = new String(CommonMethods.readFile("\\rest-mock\\getAllToyListByStatusBackOrder.json"));
-			List<ToyStatusById> toyDetailsResponse = mapper.readValue(backOrder, new TypeReference<List<ToyStatusById>>(){});
+			List<ToyStatusById> toyDetailsResponse = mapper.readValue(backOrder, new TypeReference<List<ToyStatusById>>() {
+			});
 			given(toyDetailsServiceimpl.getListOfToysByStatus(ArgumentMatchers.any())).willReturn(toyDetailsResponse);
 			List<ToyStatusById> toyStatusById = toyDetailsController.getToyListByStatus("backorder");
-			Assert.assertEquals("backorder",toyStatusById.get(0).getStatus());
-			Assert.assertEquals(1017,toyStatusById.get(0).getId());
+			Assert.assertEquals("backorder", toyStatusById.get(0).getStatus());
+			Assert.assertEquals(1017, toyStatusById.get(0).getId());
 		} catch (Exception e) {
 		}
 	}
@@ -108,11 +112,25 @@ class ToydetailsControllerTest {
 	void getToyDetailsByStatusOutOfStockTest() {
 		try {
 			String outOfStock = new String(CommonMethods.readFile("\\rest-mock\\getAllToyListByStatusOutOfStock.json"));
-			List<ToyStatusById> toyDetailsResponse = mapper.readValue(outOfStock, new TypeReference<List<ToyStatusById>>(){});
+			List<ToyStatusById> toyDetailsResponse = mapper.readValue(outOfStock, new TypeReference<List<ToyStatusById>>() {
+			});
 			given(toyDetailsServiceimpl.getListOfToysByStatus(ArgumentMatchers.any())).willReturn(toyDetailsResponse);
 			List<ToyStatusById> toyStatusById = toyDetailsController.getToyListByStatus("outofstock");
-			Assert.assertEquals("outofstock",toyStatusById.get(0).getStatus());
-			Assert.assertEquals(1010,toyStatusById.get(0).getId());
+			Assert.assertEquals("outofstock", toyStatusById.get(0).getStatus());
+			Assert.assertEquals(1010, toyStatusById.get(0).getId());
+		} catch (Exception e) {
+		}
+	}
+
+	@Test
+	void getAllToysInBasketTest() {
+		try {
+			String toyDetails = new String(readFile("\\rest-mock\\getAllToysInBasket.json"));
+			ToyDetailsResponse toyDetailsResponseMapper = mapper.readValue(toyDetails, ToyDetailsResponse.class);
+			given(toyDetailsServiceimpl.getListOfToysInBasket(1000 , "10").equals(toyDetailsResponseMapper));
+			ToyDetailsResponse toyDetailsResponse = toyDetailsController.getToyDetails();
+			Assert.assertEquals(1000, toyDetailsResponse.getToyDetailsList().get(0).getId());
+			Assert.assertEquals(new BigDecimal(10), toyDetailsResponse.getToyDetailsList().get(0).getPrice());
 		} catch (Exception e) {
 		}
 	}
