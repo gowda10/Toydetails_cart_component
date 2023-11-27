@@ -1,13 +1,11 @@
 {
   "toyDetailsCartList": [
     {
-      "b_id": 1,
       "id": 1000,
       "price": 10,
       "name": "Car"
     },
     {
-      "b_id": 1,
       "id": 1001,
       "price": 10,
       "name": "Bike"
@@ -18,31 +16,26 @@
       "name": "Cycle"
     },
     {
-      "b_id": 1,
       "id": 1003,
       "price": 10,
       "name": "Bus"
     },
     {
-      "b_id": 1,
       "id": 1004,
       "price": 10,
       "name": "Doctor Set"
     },
     {
-      "b_id": 1,
       "id": 1019,
       "price": 25,
       "name": "Laptop Advanced"
     },
     {
-      "b_id": 1,
       "id": 1020,
       "price": 30,
       "name": "Laptop Basic"
     },
     {
-      "b_id": 1,
       "id": 1021,
       "price": 35,
       "name": "Mustang"
