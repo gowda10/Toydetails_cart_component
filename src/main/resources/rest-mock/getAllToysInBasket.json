@@ -3,161 +3,102 @@
     {
       "id": 1000,
       "price": 10,
-      "age": "3",
-      "name": "Car",
-      "imageURL": "src/media/Car.jpg",
-      "status": "available"
+      "name": "Car"
     },
     {
       "id": 1001,
       "price": 10,
-      "age": "3",
-      "name": "Bike",
-      "imageURL": "src/media/Bike.jpg",
-      "status": "available"
+      "name": "Bike"
     },
     {
       "id": 1002,
       "price": 10,
-      "age": "3",
-      "name": "Cycle",
-      "imageURL": "src/media/Cycle.jpg",
-      "status": "available"
+      "name": "Cycle"
     },
     {
       "id": 1003,
       "price": 10,
-      "age": "5",
-      "name": "Bus",
-      "imageURL": "src/media/Bus.jpg",
-      "status": "available"
+      "name": "Bus"
     },
     {
       "id": 1004,
       "price": 10,
-      "age": "5",
-      "name": "Doctor Set",
-      "imageURL": "src/media/Doctor Set.jpg",
-      "status": "available"
+      "name": "Doctor Set"
     },
     {
       "id": 1005,
       "price": 10,
-      "age": "2",
-      "name": "Building Blocks",
-      "imageURL": "src/media/Building Blocks.jpg",
-      "status": "available"
+      "name": "Building Blocks"
     },
     {
       "id": 1006,
       "price": 5,
-      "age": "1",
-      "name": "Duck",
-      "imageURL": "src/media/Duck.jpg",
-      "status": "available"
+      "name": "Duck"
     },
     {
       "id": 1007,
       "price": 5,
-      "age": "1",
-      "name": "Ball",
-      "imageURL": "src/media/Ball.jpg",
-      "status": "available"
+      "name": "Ball"
     },
     {
       "id": 1008,
       "price": 5,
-      "age": "1",
-      "name": "Sticks",
-      "imageURL": "src/media/Sticks.jpg",
-      "status": "available"
+      "name": "Sticks"
     },
     {
       "id": 1009,
       "price": 5,
-      "age": "4",
-      "name": "Billing Set",
-      "imageURL": "src/media/Billing Set.jpg",
-      "status": "available"
+      "name": "Billing Set"
     },
     {
       "id": 1010,
       "price": 15,
-      "age": "2",
-      "name": "Bubble car",
-      "imageURL": "src/media/Bubble car.jpg",
-      "status": "available"
+      "name": "Bubble car"
     },
     {
       "id": 1011,
       "price": 15,
-      "age": "3",
-      "name": "Soft Bear",
-      "imageURL": "src/media/Soft Bear.jpg",
-      "status": "available"
+      "name": "Soft Bear"
     },
     {
       "id": 1012,
       "price": 15,
-      "age": "5",
-      "name": "Paw Patrol Skie ",
-      "imageURL": "src/media/Paw Patrol Skie .jpg",
-      "status": "available"
+      "name": "Paw Patrol Skie "
     },
     {
       "id": 1013,
       "price": 15,
-      "age": "10",
-      "name": "Smart Watch",
-      "imageURL": "src/media/Smart Watch.jpg",
-      "status": "outofstock"
+      "name": "Smart Watch"
     },
     {
       "id": 1014,
       "price": 20,
-      "age": "5",
-      "name": "Kitchen Set",
-      "imageURL": "src/media/Kitchen Set.jpg",
-      "status": "backorder"
+      "name": "Kitchen Set"
     },
     {
       "id": 1017,
       "price": 25,
-      "age": "10",
-      "name": "Scooter",
-      "imageURL": "src/media/Scooter.jpg",
-      "status": "backorder"
+      "name": "Scooter"
     },
     {
       "id": 1018,
       "price": 25,
-      "age": "8",
-      "name": "Robot",
-      "imageURL": "src/media/Robot.jpg",
-      "status": "outofstock"
+      "name": "Robot"
     },
     {
       "id": 1019,
       "price": 25,
-      "age": "8",
-      "name": "Laptop Advanced",
-      "imageURL": "src/media/Laptop Advanced.jpg",
-      "status": "backorder"
+      "name": "Laptop Advanced"
     },
     {
       "id": 1020,
       "price": 30,
-      "age": "4",
-      "name": "Laptop Basic",
-      "imageURL": "src/media/Laptop Basic.jpg",
-      "status": "outofstock"
+      "name": "Laptop Basic"
     },
     {
       "id": 1021,
       "price": 35,
-      "age": "6",
-      "name": "Mustang",
-      "imageURL": "src/media/Laptop Basic.jpg"
+      "name": "Mustang"
     }
   ]
 }

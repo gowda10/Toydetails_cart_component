@@ -127,7 +127,7 @@ class ToydetailsControllerTest {
 		try {
 			String toyDetails = new String(readFile("\\rest-mock\\getAllToysInBasket.json"));
 			ToyDetailsResponse toyDetailsResponseMapper = mapper.readValue(toyDetails, ToyDetailsResponse.class);
-			given(toyDetailsServiceimpl.getListOfToysInBasket(1000 , "10").equals(toyDetailsResponseMapper));
+			given(toyDetailsServiceimpl.getListOfToysInBasket().equals(toyDetailsResponseMapper));
 			ToyDetailsResponse toyDetailsResponse = toyDetailsController.getToyDetails();
 			Assert.assertEquals(1000, toyDetailsResponse.getToyDetailsList().get(0).getId());
 			Assert.assertEquals(new BigDecimal(10), toyDetailsResponse.getToyDetailsList().get(0).getPrice());

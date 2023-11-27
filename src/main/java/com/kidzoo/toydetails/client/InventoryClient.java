@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,8 @@ public class InventoryClient {
     final private String getStatus = "?status=";
 
     final private String getPrice = "price";
+
+    final private String getName = "name";
     String referenceId = UUID.randomUUID().toString();
     ObjectMapper objectMapper = new ObjectMapper();
 
@@ -91,21 +94,5 @@ public class InventoryClient {
                 throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
             }
             return toyDetailsByStatus;
-    }
-    public List<ToyDetails> getAllToysInBasket(int id , String price){
-        RestTemplate restTemplate = new RestTemplate();
-        final String url = getServiceRoot+id+price;
-        final String getURLForToysInBasket = getServiceRoot+getToyId+getPrice;
-        List<ToyDetails> toyDetailsInBasket = new ArrayList<>();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity request = new HttpEntity(headers);
-        try {
-            MockRestServiceServer server = MockRestServiceServer.bindTo(restTemplate).build();
-            String basket = new String(readFile("\\rest-mock\\getAllToysInBasket.json"));
-        } catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
-        return toyDetailsInBasket;
     }
 }

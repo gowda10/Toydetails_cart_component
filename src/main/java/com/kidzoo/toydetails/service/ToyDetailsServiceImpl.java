@@ -1,11 +1,13 @@
 package com.kidzoo.toydetails.service;
 
 import com.kidzoo.toydetails.client.InventoryClient;
+import com.kidzoo.toydetails.client.ToyDetailsCartClient;
+import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
 import com.kidzoo.toydetails.client.ToyDetailsClient;
 
 import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
 import com.kidzoo.toydetails.exception.ToyDetailsCustomException;
-import com.kidzoo.toydetails.model.response.ToyDetails;
+import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
 import com.kidzoo.toydetails.model.response.ToyStatusById;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,8 @@ public class ToyDetailsServiceImpl {
     private ToyDetailsClient toyDetailsClient;
     @Autowired
     private InventoryClient inventoryClient;
+    @Autowired
+    private ToyDetailsCartClient toyDetailsCartClient;
     String referenceId = UUID.randomUUID().toString();
 
     public ToyDetailsResponse getToyDetails() {
@@ -68,11 +72,13 @@ public class ToyDetailsServiceImpl {
             throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
         }
     }
-    public List<ToyDetails> getListOfToysInBasket(int id , String price) {
-        try{
-            return inventoryClient.getAllToysInBasket(id , price);
-        }catch (Exception exception) {
+    public ToyDetailsBasketResponse getListOfToysInBasket() {
+        ToyDetailsBasketResponse toyDetailsBasketResponse = new ToyDetailsBasketResponse();
+        try {
+            toyDetailsBasketResponse.setToyDetailsCartList(toyDetailsCartClient.findAll());
+        } catch (Exception exception) {
             throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
         }
+        return toyDetailsBasketResponse;
     }
 }

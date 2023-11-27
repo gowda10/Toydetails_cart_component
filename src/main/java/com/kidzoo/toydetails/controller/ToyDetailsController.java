@@ -1,6 +1,7 @@
 package com.kidzoo.toydetails.controller;
 
-import com.kidzoo.toydetails.model.response.ToyDetails;
+import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
+import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
 import com.kidzoo.toydetails.model.response.ToyStatusById;
 import com.kidzoo.toydetails.service.ToyDetailsServiceImpl;
@@ -81,16 +82,15 @@ public class ToyDetailsController {
                     , allowableValues =  "available,backorder,outofstock") @RequestParam(value = "status") String status){
         return toyDetailsService.getListOfToysByStatus(status);
     }
+
     @ApiOperation(value = "This API will retrieve list of toys in the Basket")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = ToyStatusById.class),
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = Error.class),
             @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
             @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
             @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class) })
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
     @GetMapping(value = "/find-toys-in-basket", produces = "application/hal+json")
-    public List<ToyDetails> getAllToysInBasket(){
-        return toyDetailsService.getListOfToysInBasket(1001 , "10");
-    }
+    public ToyDetailsBasketResponse getListOfToysInBasket(){return toyDetailsService.getListOfToysInBasket();}
 }
