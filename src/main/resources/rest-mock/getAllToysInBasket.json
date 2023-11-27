@@ -1,11 +1,13 @@
 {
-  "toyDetailsList": [
+  "toyDetailsCartList": [
     {
+      "b_id": 1,
       "id": 1000,
       "price": 10,
       "name": "Car"
     },
     {
+      "b_id": 1,
       "id": 1001,
       "price": 10,
       "name": "Bike"
@@ -16,86 +18,31 @@
       "name": "Cycle"
     },
     {
+      "b_id": 1,
       "id": 1003,
       "price": 10,
       "name": "Bus"
     },
     {
+      "b_id": 1,
       "id": 1004,
       "price": 10,
       "name": "Doctor Set"
     },
     {
-      "id": 1005,
-      "price": 10,
-      "name": "Building Blocks"
-    },
-    {
-      "id": 1006,
-      "price": 5,
-      "name": "Duck"
-    },
-    {
-      "id": 1007,
-      "price": 5,
-      "name": "Ball"
-    },
-    {
-      "id": 1008,
-      "price": 5,
-      "name": "Sticks"
-    },
-    {
-      "id": 1009,
-      "price": 5,
-      "name": "Billing Set"
-    },
-    {
-      "id": 1010,
-      "price": 15,
-      "name": "Bubble car"
-    },
-    {
-      "id": 1011,
-      "price": 15,
-      "name": "Soft Bear"
-    },
-    {
-      "id": 1012,
-      "price": 15,
-      "name": "Paw Patrol Skie "
-    },
-    {
-      "id": 1013,
-      "price": 15,
-      "name": "Smart Watch"
-    },
-    {
-      "id": 1014,
-      "price": 20,
-      "name": "Kitchen Set"
-    },
-    {
-      "id": 1017,
-      "price": 25,
-      "name": "Scooter"
-    },
-    {
-      "id": 1018,
-      "price": 25,
-      "name": "Robot"
-    },
-    {
+      "b_id": 1,
       "id": 1019,
       "price": 25,
       "name": "Laptop Advanced"
     },
     {
+      "b_id": 1,
       "id": 1020,
       "price": 30,
       "name": "Laptop Basic"
     },
     {
+      "b_id": 1,
       "id": 1021,
       "price": 35,
       "name": "Mustang"
