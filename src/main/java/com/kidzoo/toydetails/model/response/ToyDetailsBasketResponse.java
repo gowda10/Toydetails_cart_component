@@ -14,4 +14,5 @@ import java.util.List;
 public  class ToyDetailsBasketResponse {
     @ApiModelProperty("List of Toys In Basket")
     private List<ToyDetailsCart> toyDetailsCartList;
+
 }

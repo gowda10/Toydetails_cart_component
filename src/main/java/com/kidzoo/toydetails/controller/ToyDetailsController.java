@@ -93,4 +93,72 @@ public class ToyDetailsController {
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
     @GetMapping(value = "/find-toys-in-basket", produces = "application/hal+json")
     public ToyDetailsBasketResponse getListOfToysInBasket(){return toyDetailsService.getListOfToysInBasket();}
+
+
+    @ApiOperation(value = "This API will save toys in the Basket")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @PostMapping(value = "/add-toys-to-basket", produces = "application/hal+json")
+    public ToyDetailsCart addToCart(@RequestBody ToyDetailsCart toyDetailsCart){return toyDetailsService.saveCart(toyDetailsCart);}
+
+    @ApiOperation(value = "This API will save list of toys in the Basket")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @PostMapping(value = "/add-list-of-toys-to-basket", produces = "application/hal+json")
+    public List<ToyDetailsCart> addListToCart(@RequestBody List<ToyDetailsCart> toyDetailsCartList){return toyDetailsService.saveCartList(toyDetailsCartList);}
+
+    @ApiOperation(value = "This API will get the list of toys in the Basket")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @GetMapping(value = "/view-basket", produces = "application/hal+json")
+    public List<ToyDetailsCart> getToysInCart(){return toyDetailsService.getToysInCart();}
+
+
+    @ApiOperation(value = "This API will get the list of toys in the Basket by Id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @GetMapping(value = "/view-basket-by-Id/{id}", produces = "application/hal+json")
+    public ToyDetailsCart getToysByIdInCart(@PathVariable int id){return toyDetailsService.getToysByIdInCart(id);}
+
+    @ApiOperation(value = "This API will update the list of toys in the Basket by Id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @PutMapping(value = "/update-from-basket", produces = "application/hal+json")
+    public ToyDetailsCart updateCart(@RequestBody ToyDetailsCart toyDetailsCart){return toyDetailsService.updateCart(toyDetailsCart);}
+
+    @ApiOperation(value = "This API will get the list of toys in the Basket by Id")
+    @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = Error.class),
+            @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
+            @ApiResponse(code = 403, message = "Forbidden", response = Error.class),
+            @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
+            @ApiResponse(code = 404, message = "Not found", response = Error.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
+    @DeleteMapping(value = "/delete-from-basket/{id}", produces = "application/hal+json")
+    public String deleteToyFromCart(@PathVariable int id){return toyDetailsService.deleteToyFromCart(id);}
 }

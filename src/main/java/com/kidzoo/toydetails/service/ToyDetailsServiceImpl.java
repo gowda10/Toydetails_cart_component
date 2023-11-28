@@ -31,7 +31,21 @@ public class ToyDetailsServiceImpl {
     private ToyDetailsCartClient toyDetailsCartClient;
     String referenceId = UUID.randomUUID().toString();
 
+
+
+
+
     public ToyDetailsResponse getToyDetails() {
+        ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
+        try {
+            toyDetailsResponse.setToyDetailsList(toyDetailsClient.findAll());
+        } catch (Exception exception) {
+            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
+        }
+        return toyDetailsResponse;
+    }
+
+    public ToyDetailsResponse addToyDetails() {
         ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
         try {
             toyDetailsResponse.setToyDetailsList(toyDetailsClient.findAll());
@@ -81,4 +95,34 @@ public class ToyDetailsServiceImpl {
         }
         return toyDetailsBasketResponse;
     }
+
+    public ToyDetailsCart saveCart(ToyDetailsCart toyDetailsCart){
+       return toyDetailsCartClient.save(toyDetailsCart);
+    }
+
+    public List<ToyDetailsCart> saveCartList(List<ToyDetailsCart> toyDetailsCartList){
+        return toyDetailsCartClient.saveAll(toyDetailsCartList);
+    }
+
+    public List<ToyDetailsCart> getToysInCart(){
+        return toyDetailsCartClient.findAll();
+    }
+
+    public ToyDetailsCart getToysByIdInCart(int id){
+        return toyDetailsCartClient.findById(id).orElse(null);
+    }
+
+    public String deleteToyFromCart(int id){
+        toyDetailsCartClient.deleteById(id);
+        return id+" Has been removed";
+    }
+
+    public ToyDetailsCart updateCart(ToyDetailsCart toyDetailsCart){
+        ToyDetailsCart existingToy=toyDetailsCartClient.findById(toyDetailsCart.getId()).orElse(null);
+        existingToy.setId(toyDetailsCart.getId());
+        existingToy.setName(toyDetailsCart.getName());
+        existingToy.setPrice(toyDetailsCart.getPrice());
+        return toyDetailsCartClient.save(existingToy);
+    }
+
 }
