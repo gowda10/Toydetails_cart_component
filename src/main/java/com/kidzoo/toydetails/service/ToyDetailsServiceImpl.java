@@ -118,7 +118,7 @@ public class ToyDetailsServiceImpl {
     }
 
     public ToyDetailsCart updateCart(ToyDetailsCart toyDetailsCart){
-        ToyDetailsCart existingToy=toyDetailsCartClient.findById(toyDetailsCart.getId()).orElse(null);
+        ToyDetailsCart existingToy=toyDetailsCartClient.findById(toyDetailsCart.getB_id()).orElse(null);
         existingToy.setId(toyDetailsCart.getId());
         existingToy.setName(toyDetailsCart.getName());
         existingToy.setPrice(toyDetailsCart.getPrice());

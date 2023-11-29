@@ -95,7 +95,7 @@ public class ToyDetailsController {
     public ToyDetailsBasketResponse getListOfToysInBasket(){return toyDetailsService.getListOfToysInBasket();}
 
 
-    @ApiOperation(value = "This API will save toys in the Basket")
+    @ApiOperation(value = "This API will add toys to the Basket")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = Error.class),
             @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
@@ -106,7 +106,7 @@ public class ToyDetailsController {
     @PostMapping(value = "/add-toys-to-basket", produces = "application/hal+json")
     public ToyDetailsCart addToCart(@RequestBody ToyDetailsCart toyDetailsCart){return toyDetailsService.saveCart(toyDetailsCart);}
 
-    @ApiOperation(value = "This API will save list of toys in the Basket")
+    @ApiOperation(value = "This API will add list of toys in the Basket")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = Error.class),
             @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
@@ -159,6 +159,6 @@ public class ToyDetailsController {
             @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
-    @DeleteMapping(value = "/delete-from-basket/{id}", produces = "application/hal+json")
-    public String deleteToyFromCart(@PathVariable int id){return toyDetailsService.deleteToyFromCart(id);}
+    @DeleteMapping(value = "/delete-from-basket/{b_id}/{id}", produces = "application/hal+json")
+    public String deleteToyFromCart(@PathVariable int b_id, int id){return toyDetailsService.deleteToyFromCart(id);}
 }

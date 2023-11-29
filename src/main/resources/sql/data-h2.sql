@@ -13,6 +13,8 @@ INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1011','15',
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1012','15','5','Paw Patrol Skie ','src/media/Paw Patrol Skie .jpg','outofstock');
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1013','15','10','Smart Watch','src/media/Smart Watch.jpg','available');
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1014','20','5','Kitchen Set','src/media/Kitchen Set.jpg','available');
+INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1015','25','6','Sport Shoe','src/media/Sport Shoe.jpg','available');
+INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1016','20','7','Running Shoe','src/media/Running Shoe.jpg','available');
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1017','25','10','Scooter','src/media/Scooter.jpg','backorder');
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1018','25','8','Robot','src/media/Robot.jpg','outofstock');
 INSERT INTO TOY_DETAILS (ID,PRICE,AGE,NAME,IMAGEURL,STATUS) VALUES ('1019','25','8','Laptop Advanced','src/media/Laptop Advanced.jpg','available');
