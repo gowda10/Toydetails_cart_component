@@ -1,6 +1,7 @@
 package com.kidzoo.toydetails.controller;
 
 import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
+import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
 import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
 import com.kidzoo.toydetails.model.response.ToyStatusById;

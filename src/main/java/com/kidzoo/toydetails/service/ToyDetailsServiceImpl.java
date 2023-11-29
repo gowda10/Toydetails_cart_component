@@ -45,15 +45,6 @@ public class ToyDetailsServiceImpl {
         return toyDetailsResponse;
     }
 
-    public ToyDetailsResponse addToyDetails() {
-        ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
-        try {
-            toyDetailsResponse.setToyDetailsList(toyDetailsClient.findAll());
-        } catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
-        return toyDetailsResponse;
-    }
 
     public ToyDetailsResponse getToyDetailsBasedOnPriceRange(String priceRange_1, String priceRange_2) {
         ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
