@@ -2,9 +2,11 @@ package com.kidzoo.toydetails.service;
 
 import com.kidzoo.toydetails.client.InventoryClient;
 import com.kidzoo.toydetails.client.ToyDetailsCartClient;
+import com.kidzoo.toydetails.client.ToyDetailsCheckoutClient;
 import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
 import com.kidzoo.toydetails.client.ToyDetailsClient;
 
+import com.kidzoo.toydetails.client.entity.ToyDetailsCheckout;
 import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
 import com.kidzoo.toydetails.exception.ToyDetailsCustomException;
 import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
@@ -29,6 +31,9 @@ public class ToyDetailsServiceImpl {
     private InventoryClient inventoryClient;
     @Autowired
     private ToyDetailsCartClient toyDetailsCartClient;
+
+    @Autowired
+    private ToyDetailsCheckoutClient toyDetailsCheckoutClient;
     String referenceId = UUID.randomUUID().toString();
 
 
@@ -114,6 +119,14 @@ public class ToyDetailsServiceImpl {
         existingToy.setName(toyDetailsCart.getName());
         existingToy.setPrice(toyDetailsCart.getPrice());
         return toyDetailsCartClient.save(existingToy);
+    }
+
+    public List<ToyDetailsCheckout> getToyDetailsCheckout(){
+        return toyDetailsCheckoutClient.findAll();
+    }
+
+    public List<ToyDetailsCheckout> saveCheckoutList(List<ToyDetailsCheckout> toyDetailsCheckoutList){
+        return toyDetailsCheckoutClient.saveAll(toyDetailsCheckoutList);
     }
 
 }
