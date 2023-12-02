@@ -1,6 +1,5 @@
 package com.kidzoo.toydetails.service;
 
-import com.kidzoo.toydetails.client.InventoryClient;
 import com.kidzoo.toydetails.client.ToyDetailsCartClient;
 import com.kidzoo.toydetails.client.ToyDetailsCheckoutClient;
 import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
@@ -9,7 +8,6 @@ import com.kidzoo.toydetails.client.ToyDetailsClient;
 import com.kidzoo.toydetails.client.entity.ToyDetailsCheckout;
 import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
 import com.kidzoo.toydetails.exception.ToyDetailsCustomException;
-import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
 import com.kidzoo.toydetails.model.response.ToyStatusById;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +26,6 @@ public class ToyDetailsServiceImpl {
     @Autowired
     private ToyDetailsClient toyDetailsClient;
     @Autowired
-    private InventoryClient inventoryClient;
-    @Autowired
     private ToyDetailsCartClient toyDetailsCartClient;
 
     @Autowired
@@ -40,16 +36,13 @@ public class ToyDetailsServiceImpl {
 
 
 
-    public ToyDetailsResponse getToyDetails() {
-        ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
-        try {
-            toyDetailsResponse.setToyDetailsList(toyDetailsClient.findAll());
-        } catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
-        return toyDetailsResponse;
+    public ToyDetailsEntity saveToy(ToyDetailsEntity toyDetailsEntity){
+        return toyDetailsClient.save(toyDetailsEntity);
     }
 
+    public List<ToyDetailsEntity> getToys(){
+        return toyDetailsClient.findAll();
+    }
 
     public ToyDetailsResponse getToyDetailsBasedOnPriceRange(String priceRange_1, String priceRange_2) {
         ToyDetailsResponse toyDetailsResponse = new ToyDetailsResponse();
@@ -65,59 +58,38 @@ public class ToyDetailsServiceImpl {
         return toyDetailsResponse;
     }
 
-    public ToyStatusById getToyStatusById(int toyId) {
-        ToyStatusById toyStatusById ;
-        try {
-            toyStatusById = inventoryClient.findToyFromInventoryById(toyId);
-        } catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
-        return toyStatusById;
+    public String deleteToy(int id){
+        toyDetailsClient.deleteById(id);
+        return id +" Has been removed";
     }
 
-    public List<ToyStatusById> getListOfToysByStatus(String status) {
-        try{
-            return inventoryClient.getToyListFromInventoryByStatus(status);
-        }catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
+    public ToyDetailsEntity updateToy(ToyDetailsEntity toyDetailsEntity){
+        ToyDetailsEntity existingToy=toyDetailsClient.findById(toyDetailsEntity.getId()).orElse(null);
+        existingToy.setName(toyDetailsEntity.getName());
+        existingToy.setPrice(toyDetailsEntity.getPrice());
+        existingToy.setAge(toyDetailsEntity.getAge());
+        existingToy.setImageURL(toyDetailsEntity.getImageURL());
+        existingToy.setStatus(toyDetailsEntity.getStatus());
+        return toyDetailsClient.save(existingToy);
     }
-    public ToyDetailsBasketResponse getListOfToysInBasket() {
-        ToyDetailsBasketResponse toyDetailsBasketResponse = new ToyDetailsBasketResponse();
-        try {
-            toyDetailsBasketResponse.setToyDetailsCartList(toyDetailsCartClient.findAll());
-        } catch (Exception exception) {
-            throw new ToyDetailsCustomException(referenceId, exception.getMessage(), "400");
-        }
-        return toyDetailsBasketResponse;
-    }
-
     public ToyDetailsCart saveCart(ToyDetailsCart toyDetailsCart){
        return toyDetailsCartClient.save(toyDetailsCart);
     }
 
-    public List<ToyDetailsCart> saveCartList(List<ToyDetailsCart> toyDetailsCartList){
-        return toyDetailsCartClient.saveAll(toyDetailsCartList);
+    public ToyDetailsCart getToysInCart(int B_id){
+        return toyDetailsCartClient.findById(B_id).orElse(null);
     }
 
-    public List<ToyDetailsCart> getToysInCart(){
-        return toyDetailsCartClient.findAll();
-    }
-
-    public ToyDetailsCart getToysByIdInCart(int id){
-        return toyDetailsCartClient.findById(id).orElse(null);
-    }
-
-    public String deleteToyFromCart(int id){
-        toyDetailsCartClient.deleteById(id);
-        return id+" Has been removed";
+    public String deleteToyFromCart(int B_id){
+        toyDetailsCartClient.deleteById(B_id);
+        return B_id +" Has been removed";
     }
 
     public ToyDetailsCart updateCart(ToyDetailsCart toyDetailsCart){
         ToyDetailsCart existingToy=toyDetailsCartClient.findById(toyDetailsCart.getB_id()).orElse(null);
-        existingToy.setId(toyDetailsCart.getId());
         existingToy.setName(toyDetailsCart.getName());
         existingToy.setPrice(toyDetailsCart.getPrice());
+        existingToy.setQuantity(toyDetailsCart.getQuantity());
         return toyDetailsCartClient.save(existingToy);
     }
 

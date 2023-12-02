@@ -1,10 +1,8 @@
 package com.kidzoo.toydetails.client.entity;
 
 import lombok.*;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
@@ -16,16 +14,11 @@ import java.math.BigDecimal;
 @ToString
 public class ToyDetailsEntity {
     @Id
-    @Column(name = "ID")
+    @GeneratedValue()
     private int id;
-    @Column(name = "PRICE")
-    private BigDecimal price;
-    @Column(name = "AGE")
-    private String age;
-    @Column(name = "NAME")
     private String name;
-    @Column(name = "IMAGEURL")
+    private BigDecimal price;
+    private String age;
     private String imageURL;
-    @Column(name = "Status")
     private String status;
 }

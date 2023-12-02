@@ -2,11 +2,9 @@ package com.kidzoo.toydetails.client.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,15 +14,12 @@ import java.math.BigDecimal;
 @Setter
 @ToString
 public class ToyDetailsCart {
-    @Id
-    @Column(name = "ID")
-    private int id;
-    @Column(name = "B_ID")
-    private int b_id;
-    @Column(name = "PRICE")
-    private BigDecimal price;
-    @Column(name = "NAME")
-    private String name;
 
+    @Id
+    @GeneratedValue()
+    private int b_id;
+    private String name;
+    private BigDecimal price;
+    private BigDecimal quantity;
 
     }
