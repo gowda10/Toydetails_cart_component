@@ -1,12 +1,14 @@
 package com.kidzoo.toydetails.controller;
 
+import com.kidzoo.toydetails.client.ToyDetailsCartClient;
+import com.kidzoo.toydetails.client.ToyDetailsClient;
 import com.kidzoo.toydetails.client.entity.ToyDetailsCart;
 import com.kidzoo.toydetails.client.entity.ToyDetailsCheckout;
 import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
+import com.kidzoo.toydetails.dto.OrderRequest;
 import com.kidzoo.toydetails.model.response.ToyDetailsBasketResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsCheckoutResponse;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
-import com.kidzoo.toydetails.model.response.ToyStatusById;
 import com.kidzoo.toydetails.service.ToyDetailsServiceImpl;
 import com.kidzoo.toydetails.exception.Error;
 import io.swagger.annotations.*;
@@ -28,6 +30,12 @@ import java.util.UUID;
 public class ToyDetailsController {
     @Autowired
     ToyDetailsServiceImpl toyDetailsService;
+
+    @Autowired
+    ToyDetailsCartClient toyDetailsCartClient;
+
+    @Autowired
+    ToyDetailsClient toyDetailsClient;
 
 
     @ApiOperation(value = "This API will add toys to database")
@@ -105,7 +113,7 @@ public class ToyDetailsController {
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
     @PostMapping(value = "/add-toys-to-basket", produces = "application/hal+json")
-    public ToyDetailsCart addToCart(@RequestBody ToyDetailsCart toyDetailsCart){return toyDetailsService.saveCart(toyDetailsCart);}
+    public ToyDetailsCart addToCart(@RequestBody OrderRequest request){return toyDetailsCartClient.save(request.getCart());}
 
 
     @ApiOperation(value = "This API will get the list of toys in the Basket by Id")
@@ -116,10 +124,10 @@ public class ToyDetailsController {
             @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
-    @GetMapping(value = "/view-basket/{id}", produces = "application/hal+json")
-    public ToyDetailsCart getToysByIdInCart(@PathVariable int B_id){return toyDetailsService.getToysInCart(B_id);}
+    @GetMapping(value = "/view-basket", produces = "application/hal+json")
+    public List<ToyDetailsCart> getToysByIdInCart(){return toyDetailsService.getToysInCart();}
 
-    @ApiOperation(value = "This API will update the list of toys in the Basket by Id")
+    @ApiOperation(value = "This API will update the list of toys in the Basket")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = Error.class),
             @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
@@ -128,9 +136,9 @@ public class ToyDetailsController {
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
     @PutMapping(value = "/update-from-basket", produces = "application/hal+json")
-    public ToyDetailsCart updateCart(@RequestBody ToyDetailsCart toyDetailsCart){return toyDetailsService.updateCart(toyDetailsCart);}
+    public ToyDetailsEntity updateCart(@RequestBody ToyDetailsEntity toyDetailsEntity){return toyDetailsService.updateCart(new ToyDetailsEntity());}
 
-    @ApiOperation(value = "This API will delete the list of toys in the Basket by Id")
+    @ApiOperation(value = "This API will delete the Basket by Id")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsBasketResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = Error.class),
             @ApiResponse(code = 401, message = "Unauthorized", response = Error.class),
@@ -138,8 +146,8 @@ public class ToyDetailsController {
             @ApiResponse(code = 405, message = "Method not allowed", response = Error.class),
             @ApiResponse(code = 404, message = "Not found", response = Error.class),
             @ApiResponse(code = 500, message = "Internal Server Error", response = Error.class)})
-    @DeleteMapping(value = "/delete-basket/{b_id}", produces = "application/hal+json")
-    public String deleteToyFromCart(@PathVariable int b_id){return toyDetailsService.deleteToyFromCart(b_id);}
+    @DeleteMapping(value = "/delete-basket/{id}", produces = "application/hal+json")
+    public String deleteToyFromCart(@PathVariable UUID id){return toyDetailsService.deleteToyFromCart(id);}
 
     @ApiOperation(value = "This API will get the list of toys for checkout")
     @ApiResponses(value = {@ApiResponse(code = 200, message = "Success", response = ToyDetailsCheckoutResponse.class),

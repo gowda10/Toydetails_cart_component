@@ -1,25 +1,23 @@
 package com.kidzoo.toydetails.client.entity;
 
 import lombok.*;
+import java.util.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name="TOY_DETAILS_BASKET")
 @Entity
-@Getter
-@Setter
 @ToString
 public class ToyDetailsCart {
-
     @Id
-    @GeneratedValue()
-    private int b_id;
-    private String name;
-    private BigDecimal price;
-    private BigDecimal quantity;
+    @GeneratedValue
+    private UUID id;
 
-    }
+    @OneToMany(targetEntity = ToyDetailsEntity.class, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "b_id", referencedColumnName = "id")
+    private List<ToyDetailsEntity> toyDetailsEntities;
+}

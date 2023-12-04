@@ -7,9 +7,9 @@ import com.kidzoo.toydetails.client.ToyDetailsClient;
 
 import com.kidzoo.toydetails.client.entity.ToyDetailsCheckout;
 import com.kidzoo.toydetails.client.entity.ToyDetailsEntity;
+import com.kidzoo.toydetails.dto.OrderRequest;
 import com.kidzoo.toydetails.exception.ToyDetailsCustomException;
 import com.kidzoo.toydetails.model.response.ToyDetailsResponse;
-import com.kidzoo.toydetails.model.response.ToyStatusById;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,6 @@ public class ToyDetailsServiceImpl {
     private ToyDetailsClient toyDetailsClient;
     @Autowired
     private ToyDetailsCartClient toyDetailsCartClient;
-
     @Autowired
     private ToyDetailsCheckoutClient toyDetailsCheckoutClient;
     String referenceId = UUID.randomUUID().toString();
@@ -67,30 +66,23 @@ public class ToyDetailsServiceImpl {
         ToyDetailsEntity existingToy=toyDetailsClient.findById(toyDetailsEntity.getId()).orElse(null);
         existingToy.setName(toyDetailsEntity.getName());
         existingToy.setPrice(toyDetailsEntity.getPrice());
-        existingToy.setAge(toyDetailsEntity.getAge());
-        existingToy.setImageURL(toyDetailsEntity.getImageURL());
-        existingToy.setStatus(toyDetailsEntity.getStatus());
+        existingToy.setQuantity(toyDetailsEntity.getQuantity());
         return toyDetailsClient.save(existingToy);
     }
-    public ToyDetailsCart saveCart(ToyDetailsCart toyDetailsCart){
-       return toyDetailsCartClient.save(toyDetailsCart);
+
+    public List<ToyDetailsCart> getToysInCart(){
+        return toyDetailsCartClient.findAll();
     }
 
-    public ToyDetailsCart getToysInCart(int B_id){
-        return toyDetailsCartClient.findById(B_id).orElse(null);
+    public String deleteToyFromCart(UUID id){
+        toyDetailsCartClient.deleteById(id);
+        return id +" Has been removed";
     }
 
-    public String deleteToyFromCart(int B_id){
-        toyDetailsCartClient.deleteById(B_id);
-        return B_id +" Has been removed";
-    }
-
-    public ToyDetailsCart updateCart(ToyDetailsCart toyDetailsCart){
-        ToyDetailsCart existingToy=toyDetailsCartClient.findById(toyDetailsCart.getB_id()).orElse(null);
-        existingToy.setName(toyDetailsCart.getName());
-        existingToy.setPrice(toyDetailsCart.getPrice());
-        existingToy.setQuantity(toyDetailsCart.getQuantity());
-        return toyDetailsCartClient.save(existingToy);
+    public ToyDetailsEntity updateCart(ToyDetailsEntity toyDetailsEntity){
+        ToyDetailsEntity existingToy=toyDetailsClient.findById(toyDetailsEntity.getId()).orElse(null);
+        existingToy.setQuantity(toyDetailsEntity.getQuantity());
+        return toyDetailsClient.save(existingToy);
     }
 
     public List<ToyDetailsCheckout> getToyDetailsCheckout(){
