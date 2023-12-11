@@ -3,10 +3,10 @@ package com.kidzoo.toydetails.controller;
 import com.kidzoo.toydetails.common.ApiResponse;
 import com.kidzoo.toydetails.dto.checkout.CheckoutItemDto;
 import com.kidzoo.toydetails.dto.checkout.StripeResponse;
-import com.kidzoo.toydetails.exception.AuthenticationFailException;
-import com.kidzoo.toydetails.exception.OrderNotFoundException;
+import com.kidzoo.toydetails.exception.*;
 import com.kidzoo.toydetails.model.Order;
 import com.kidzoo.toydetails.model.User;
+import com.kidzoo.toydetails.model.UserDetails;
 import com.kidzoo.toydetails.service.AuthenticationService;
 import com.kidzoo.toydetails.service.OrderService;
 import com.stripe.exception.StripeException;
@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/toydetails/v1/order")
@@ -28,26 +29,16 @@ public class OrderController {
     private AuthenticationService authenticationService;
 
 
-    // stripe create session API
-    @PostMapping("/create-checkout-session")
-    public ResponseEntity<StripeResponse> checkoutList(@RequestBody List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
-        // create the stripe session
-        Session session = orderService.createSession(checkoutItemDtoList);
-        StripeResponse stripeResponse = new StripeResponse(session.getId());
-        // send the stripe session id in response
-        return new ResponseEntity<StripeResponse>(stripeResponse, HttpStatus.OK);
-    }
-
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestParam("token") String token, @RequestParam("sessionId") String sessionId)
-            throws AuthenticationFailException {
+    public ResponseEntity<ApiResponse> placeOrder(@RequestParam("token") String token, @RequestParam("basketId") UUID basketId, @RequestBody UserDetails userDetails)
+    throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);
         // retrieve user
         User user = authenticationService.getUser(token);
         // place the order
-        orderService.placeOrder(user, sessionId);
+        orderService.placeOrder(user, basketId, userDetails);
         return new ResponseEntity<>(new ApiResponse(true, "Order has been placed"), HttpStatus.CREATED);
     }
 

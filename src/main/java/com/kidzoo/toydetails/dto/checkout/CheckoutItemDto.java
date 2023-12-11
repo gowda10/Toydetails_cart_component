@@ -1,21 +1,23 @@
 package com.kidzoo.toydetails.dto.checkout;
 
+import com.kidzoo.toydetails.dto.cart.CartItemDto;
+import com.kidzoo.toydetails.model.Product;
+
 public class CheckoutItemDto {
 
     private String productName;
     private int  quantity;
     private double price;
-    private long productId;
-    private int userId;
+
+    Product product;
+    CartItemDto cart;
 
     public CheckoutItemDto() {}
 
-    public CheckoutItemDto(String productName, int quantity, double price, long productId, int userId) {
-        this.productName = productName;
-        this.quantity = quantity;
-        this.price = price;
-        this.productId = productId;
-        this.userId = userId;
+    public CheckoutItemDto(String productName, int quantity, double price) {
+        this.productName = product.getName();
+        this.quantity = cart.getQuantity();
+        this.price = product.getPrice();
     }
 
     public String getProductName() {
@@ -39,22 +41,6 @@ public class CheckoutItemDto {
     }
 
     public double getPrice(){return price;}
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(long id) {
-        this.productId = id;
-    }
 
 
 

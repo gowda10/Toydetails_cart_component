@@ -1,6 +1,8 @@
 package com.kidzoo.toydetails.service;
 
 import com.kidzoo.toydetails.model.Order;
+import com.kidzoo.toydetails.model.UserDetails;
+import com.kidzoo.toydetails.repository.UserDetailsRepository;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -18,10 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.constraints.NotNull;
+import java.util.*;
 
 @Service
 @Transactional
@@ -36,11 +36,8 @@ public class OrderService {
     @Autowired
     OrderItemsRepository orderItemsRepository;
 
-    @Value("${BASE_URL}")
-    private String baseURL;
-
-    @Value("${STRIPE_SECRET_KEY}")
-    private String apiKey;
+    @Autowired
+    UserDetailsRepository userDetailsRepository;
 
     // create total price
     SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
@@ -54,45 +51,7 @@ public class OrderService {
                 .build();
     }
 
-    // build each product in the stripe checkout page
-    SessionCreateParams.LineItem createSessionLineItem(CheckoutItemDto checkoutItemDto) {
-        return SessionCreateParams.LineItem.builder()
-                // set price for each product
-                .setPriceData(createPriceData(checkoutItemDto))
-                // set quantity for each product
-                .setQuantity(Long.parseLong(String.valueOf(checkoutItemDto.getQuantity())))
-                .build();
-    }
-
-    // create session from list of checkout items
-    public Session createSession(List<CheckoutItemDto> checkoutItemDtoList) throws StripeException {
-
-        // supply success and failure url for stripe
-        String successURL = baseURL + "payment/success";
-        String failedURL = baseURL + "payment/failed";
-
-        // set the private key
-        Stripe.apiKey = apiKey;
-
-        List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<>();
-
-        // for each product compute SessionCreateParams.LineItem
-        for (CheckoutItemDto checkoutItemDto : checkoutItemDtoList) {
-            sessionItemsList.add(createSessionLineItem(checkoutItemDto));
-        }
-
-        // build the session param
-        SessionCreateParams params = SessionCreateParams.builder()
-                .addPaymentMethodType(SessionCreateParams.PaymentMethodType.CARD)
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setCancelUrl(failedURL)
-                .addAllLineItem(sessionItemsList)
-                .setSuccessUrl(successURL)
-                .build();
-        return Session.create(params);
-    }
-
-    public void placeOrder(User user, String sessionId) {
+    public void placeOrder(User user, UUID basketId, UserDetails userDetails) {
         // first let get cart items for the user
         CartDto cartDto = cartService.listCartItems(user);
 
@@ -101,7 +60,6 @@ public class OrderService {
         // create the order and save it
         Order newOrder = new Order();
         newOrder.setCreatedDate(new Date());
-        newOrder.setSessionId(sessionId);
         newOrder.setUser(user);
         newOrder.setTotalPrice(cartDto.getTotalCost());
         orderRepository.save(newOrder);
@@ -117,8 +75,18 @@ public class OrderService {
             // add to order item list
             orderItemsRepository.save(orderItem);
         }
-        //
+
         cartService.deleteUserCartItems(user);
+
+
+        UserDetails newUserDetails = new UserDetails();
+        newUserDetails.getFirstName();
+        newUserDetails.getLastName();
+        newUserDetails.getEmail();
+        newUserDetails.getShipAdd();
+        newUserDetails.getBillAdd();
+        userDetailsRepository.save(newUserDetails);
+
     }
 
     public List<Order> listOrders(User user) {

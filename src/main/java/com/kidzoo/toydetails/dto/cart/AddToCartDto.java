@@ -1,34 +1,18 @@
 package com.kidzoo.toydetails.dto.cart;
 
+import com.kidzoo.toydetails.model.Cart;
+
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class AddToCartDto {
-    private Integer id;
+    private @NotNull UUID basketId;
+
     private @NotNull Integer productId;
     private @NotNull Integer quantity;
 
     public AddToCartDto() {
     }
-
-
-
-    @Override
-    public String toString() {
-        return "CartDto{" +
-                "id=" + id +
-                ", productId=" + productId +
-                ", quantity=" + quantity +
-                ",";
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
 
     public Integer getProductId() {
         return productId;

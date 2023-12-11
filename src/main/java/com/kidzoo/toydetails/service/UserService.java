@@ -3,10 +3,7 @@ package com.kidzoo.toydetails.service;
 
 import com.kidzoo.toydetails.configuration.MessageStrings;
 import com.kidzoo.toydetails.dto.*;
-import com.kidzoo.toydetails.dto.user.SignInDto;
-import com.kidzoo.toydetails.dto.user.SignInResponseDto;
-import com.kidzoo.toydetails.dto.user.SignupDto;
-import com.kidzoo.toydetails.dto.user.UserCreateDto;
+import com.kidzoo.toydetails.dto.user.*;
 import com.kidzoo.toydetails.enums.ResponseStatus;
 import com.kidzoo.toydetails.enums.Role;
 import com.kidzoo.toydetails.exception.AuthenticationFailException;
@@ -138,6 +135,34 @@ public class UserService {
         }
 
     }
+
+    public ResponseDto guestUser(GuestUserDto guestUserDto) throws CustomException {
+        User user = new User(guestUserDto.getGuestName());
+
+        User createdUser;
+        try {
+            // save the User
+            createdUser = userRepository.save(user);
+            // generate token for user
+            final AuthenticationToken authenticationToken = new AuthenticationToken(createdUser);
+            // save token in database
+            authenticationService.saveConfirmationToken(authenticationToken);
+            AuthenticationToken token = authenticationService.getToken(user);
+
+            if(!Helper.notNull(token)) {
+                // token not present
+                throw new CustomException("token not present");
+            }
+
+            return new ResponseDto ("success", token.getToken());
+
+            // success in creating
+        } catch (Exception e) {
+            // handle signup error
+            throw new CustomException(e.getMessage());
+        }
+    }
+
 
     boolean canCrudUser(Role role) {
         if (role == Role.admin || role == Role.manager) {

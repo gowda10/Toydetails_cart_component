@@ -2,6 +2,7 @@ package com.kidzoo.toydetails.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kidzoo.toydetails.dto.user.GuestUserDto;
 import com.kidzoo.toydetails.enums.Role;
 
 import javax.persistence.*;
@@ -30,10 +31,15 @@ public class User {
     @Column(name = "password")
     private String password;
 
+
+
     @JsonIgnore
     @OneToMany(mappedBy = "user",
             fetch = FetchType.LAZY)
     private List<Order> orders;
+
+    public User(String firstName) {
+    }
 
     public Integer getId() {
         return id;
@@ -90,6 +96,7 @@ public class User {
         this.role = role;
         this.password = password;
     }
+
 
     public User() {
     }

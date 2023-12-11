@@ -58,4 +58,10 @@ public class UserController {
         authenticationService.authenticate(token);
         return userService.createUser(token, userCreateDto);
     }
+
+    @PostMapping("/guestUser")
+    public ResponseDto guestUser(@RequestBody GuestUserDto guestUserDto)
+            throws CustomException, AuthenticationFailException {
+        return userService.guestUser(guestUserDto);
+    }
 }

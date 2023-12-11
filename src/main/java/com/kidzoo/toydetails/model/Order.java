@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name="orders")
@@ -13,7 +14,7 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer orderId;
 
 
     @Column(name = "created_date")
@@ -22,8 +23,7 @@ public class Order {
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @Column(name = "session_id")
-    private String sessionId;
+
 
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
@@ -32,6 +32,13 @@ public class Order {
     @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
+
+    @JsonIgnore
+    @OneToOne(targetEntity = Cart.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "basket_id", referencedColumnName = "basketId")
+    private Cart cart;
+
 
     public Order() {
     }
@@ -45,12 +52,12 @@ public class Order {
         this.orderItems = orderItems;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
 
@@ -70,12 +77,10 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
+    public Cart getCart() {return cart;}
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public User getUser() {

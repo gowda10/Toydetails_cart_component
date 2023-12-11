@@ -5,23 +5,25 @@ import com.kidzoo.toydetails.model.Order;
 import javax.validation.constraints.NotNull;
 
 public class OrderDto {
-    private Integer id;
+    private Integer orderId;
     private @NotNull Integer userId;
+
+    private @NotNull Integer guestId;
 
     public OrderDto() {
     }
 
     public OrderDto(Order order) {
-        this.setId(order.getId());
+        this.setOrderId(order.getOrderId());
         //this.setUserId(order.getUserId());
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getUserId() {
@@ -30,6 +32,14 @@ public class OrderDto {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(Integer guestId) {
+        this.guestId = guestId;
     }
 
 }

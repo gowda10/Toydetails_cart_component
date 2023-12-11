@@ -4,9 +4,10 @@ import com.kidzoo.toydetails.model.Product;
 import com.kidzoo.toydetails.model.Cart;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 public class CartItemDto {
-    private Integer id;
+    private @NotNull UUID basketId;
     private @NotNull Integer quantity;
     private @NotNull Product product;
 
@@ -14,7 +15,7 @@ public class CartItemDto {
     }
 
     public CartItemDto(Cart cart) {
-        this.setId(cart.getId());
+        this.setBasketId(cart.getBasketId());
         this.setQuantity(cart.getQuantity());
         this.setProduct(cart.getProduct());
     }
@@ -22,18 +23,18 @@ public class CartItemDto {
     @Override
     public String toString() {
         return "CartDto{" +
-                "id=" + id +
+                "basketId=" + basketId +
                 ", quantity=" + quantity +
                 ", productName=" + product.getName() +
                 '}';
     }
 
-    public Integer getId() {
-        return id;
+    public UUID getBasketId() {
+        return basketId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setBasketId(UUID basketId) {
+        this.basketId = basketId;
     }
 
     public Integer getQuantity() {

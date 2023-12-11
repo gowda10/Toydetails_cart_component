@@ -14,23 +14,28 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @Transactional
 public class CartService {
+    Cart cart;
 
     @Autowired
     private  CartRepository cartRepository;
 
-    public CartService(){}
-
-    public CartService(CartRepository cartRepository) {
-        this.cartRepository = cartRepository;
-    }
 
     public void addToCart(AddToCartDto addToCartDto, Product product, User user){
         Cart cart = new Cart(product, addToCartDto.getQuantity(), user);
         cartRepository.save(cart);
+    }
+
+
+    public void updateCartItem(Cart cart){
+        Cart carts = cartRepository.getOne(cart.getBasketId());
+        carts.setQuantity(cart.getQuantity());
+        carts.setCreatedDate(new Date());
+        cartRepository.save(carts);
     }
 
 
@@ -54,17 +59,11 @@ public class CartService {
     }
 
 
-    public void updateCartItem(@Valid AddToCartDto cartDto, User user, Product product){
-        Cart cart = cartRepository.getOne(cartDto.getId());
-        cart.setQuantity(cartDto.getQuantity());
-        cart.setCreatedDate(new Date());
-        cartRepository.save(cart);
-    }
 
-    public void deleteCartItem(int id,int userId) throws CartItemNotExistException {
-        if (!cartRepository.existsById(id))
-            throw new CartItemNotExistException("Cart id is invalid : " + id);
-        cartRepository.deleteById(id);
+    public void deleteCartItem(UUID basketId) throws CartItemNotExistException {
+        if (!cartRepository.existsById(basketId))
+            throw new CartItemNotExistException("Cart id is invalid");
+        cartRepository.deleteById(basketId);
 
     }
 

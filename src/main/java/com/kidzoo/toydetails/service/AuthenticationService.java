@@ -16,6 +16,8 @@ public class AuthenticationService {
     @Autowired
     TokenRepository repository;
 
+
+
     public void saveConfirmationToken(AuthenticationToken authenticationToken) {
         repository.save(authenticationToken);
     }
@@ -23,6 +25,7 @@ public class AuthenticationService {
     public AuthenticationToken getToken(User user) {
         return repository.findTokenByUser(user);
     }
+
 
     public User getUser(String token) {
         AuthenticationToken authenticationToken = repository.findTokenByToken(token);

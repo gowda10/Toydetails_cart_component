@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orderitems")
@@ -27,21 +28,36 @@ public class OrderItem {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    @JoinColumn(name = "order_id", referencedColumnName = "orderId")
     private Order order;
 
     @OneToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
 
+
+    @JsonIgnore
+    @OneToOne(targetEntity = Cart.class, fetch = FetchType.EAGER)
+    @JoinColumn(name = "basket_id")
+    private Cart cart;
+
     public OrderItem(){}
 
-    public OrderItem(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price) {
+    public OrderItem(Order order, @NotNull Product product, @NotNull int quantity, @NotNull double price, @NotNull Cart cart) {
         this.product = product;
         this.quantity = quantity;
         this.price = price;
         this.order= order;
         this.createdDate = new Date();
+        this.cart = cart;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
     }
 
     public Product getProduct() {

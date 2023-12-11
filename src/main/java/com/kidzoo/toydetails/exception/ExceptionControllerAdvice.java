@@ -23,4 +23,9 @@ public class ExceptionControllerAdvice {
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(value = UserDetailsMissingException.class)
+    public final ResponseEntity<String> handleUpdateFailException(UserDetailsMissingException exception){
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
 }
