@@ -76,7 +76,6 @@ public class OrderService {
             orderItemsRepository.save(orderItem);
         }
 
-        cartService.deleteUserCartItems(user);
 
 
         UserDetails newUserDetails = new UserDetails();

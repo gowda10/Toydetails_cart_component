@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestParam("token") String token, @RequestParam("basketId") UUID basketId, @RequestBody UserDetails userDetails)
+    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestParam("basketId") UUID basketId, @RequestBody @Valid UserDetails userDetails)
     throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);
@@ -44,7 +45,7 @@ public class OrderController {
 
     // get all orders
     @GetMapping("/")
-    public ResponseEntity<List<Order>> getAllOrders(@RequestParam("token") String token) throws AuthenticationFailException {
+    public ResponseEntity<List<Order>> getAllOrders(@RequestHeader("token") String token) throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);
         // retrieve user
@@ -58,7 +59,7 @@ public class OrderController {
 
     // get orderitems for an order
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOrderById(@PathVariable("id") Integer id, @RequestParam("token") String token)
+    public ResponseEntity<Object> getOrderById(@PathVariable("id") Integer id, @RequestHeader("token") String token)
             throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);

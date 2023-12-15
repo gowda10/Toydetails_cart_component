@@ -6,13 +6,19 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class AddToCartDto {
-    private @NotNull UUID basketId;
+    private UUID basketId;
 
     private @NotNull Integer productId;
     private @NotNull Integer quantity;
 
     public AddToCartDto() {
     }
+
+    public UUID getBasketId() {
+        return basketId;
+    }
+
+    public void setBasketId(UUID basketId) {this.basketId = basketId;}
 
     public Integer getProductId() {
         return productId;

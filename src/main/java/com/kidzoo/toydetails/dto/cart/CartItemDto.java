@@ -33,9 +33,7 @@ public class CartItemDto {
         return basketId;
     }
 
-    public void setBasketId(UUID basketId) {
-        this.basketId = basketId;
-    }
+    public void setBasketId(UUID basketId) {this.basketId = basketId;}
 
     public Integer getQuantity() {
         return quantity;

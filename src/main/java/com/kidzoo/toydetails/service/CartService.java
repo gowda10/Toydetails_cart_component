@@ -19,7 +19,7 @@ import java.util.UUID;
 @Service
 @Transactional
 public class CartService {
-    Cart cart;
+
 
     @Autowired
     private  CartRepository cartRepository;
@@ -31,11 +31,11 @@ public class CartService {
     }
 
 
-    public void updateCartItem(Cart cart){
-        Cart carts = cartRepository.getOne(cart.getBasketId());
-        carts.setQuantity(cart.getQuantity());
-        carts.setCreatedDate(new Date());
-        cartRepository.save(carts);
+    public void updateCartItem(CartItemDto cartDto, User user, Product product){
+        Cart cart = cartRepository.getOne(cartDto.getBasketId());
+        cart.setQuantity(cartDto.getQuantity());
+        cart.setCreatedDate(new Date());
+        cartRepository.save(cart);
     }
 
 
@@ -60,9 +60,9 @@ public class CartService {
 
 
 
-    public void deleteCartItem(UUID basketId) throws CartItemNotExistException {
+    public void deleteCartItem(UUID basketId, int userId) throws CartItemNotExistException {
         if (!cartRepository.existsById(basketId))
-            throw new CartItemNotExistException("Cart id is invalid");
+            throw new CartItemNotExistException("Cart id is invalid:" + basketId);
         cartRepository.deleteById(basketId);
 
     }
