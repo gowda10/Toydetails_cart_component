@@ -54,11 +54,10 @@ public class CartController {
     }
     @PutMapping("/update/{basketId}")
     public ResponseEntity<ApiResponse> updateCartItem(@RequestBody @Valid CartItemDto cartDto, @PathVariable("basketId") UUID basketId,
-                                                      @RequestHeader(value = "token") String token) throws AuthenticationFailException,ProductNotExistException {
+                                                      @RequestParam(value = "token") String token) throws AuthenticationFailException,ProductNotExistException {
         authenticationService.authenticate(token);
         User user = authenticationService.getUser(token);
-        Product product = productService.getProductById(cartDto.getProduct().getId());
-        cartService.updateCartItem(cartDto, user, product);
+        cartService.updateCartItem(cartDto, user);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Product has been updated"), HttpStatus.OK);
     }
 

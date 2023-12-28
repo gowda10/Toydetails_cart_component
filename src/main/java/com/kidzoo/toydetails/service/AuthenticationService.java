@@ -1,20 +1,27 @@
 package com.kidzoo.toydetails.service;
 
 
+import com.kidzoo.toydetails.model.Cart;
 import com.kidzoo.toydetails.model.User;
 import com.kidzoo.toydetails.configuration.MessageStrings;
 import com.kidzoo.toydetails.exception.AuthenticationFailException;
 import com.kidzoo.toydetails.model.AuthenticationToken;
+import com.kidzoo.toydetails.repository.CartRepository;
 import com.kidzoo.toydetails.repository.TokenRepository;
 import com.kidzoo.toydetails.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class AuthenticationService {
 
     @Autowired
     TokenRepository repository;
+
+    @Autowired
+    CartRepository cartRepository;
 
 
 

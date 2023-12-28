@@ -25,12 +25,12 @@ public class CartItemDto {
         return "CartDto{" +
                 "basketId=" + basketId +
                 ", quantity=" + quantity +
-                ", productName=" + product.getName() +
+                ", product=" + product +
                 '}';
     }
 
     public UUID getBasketId() {
-        return basketId;
+        return this.basketId;
     }
 
     public void setBasketId(UUID basketId) {this.basketId = basketId;}

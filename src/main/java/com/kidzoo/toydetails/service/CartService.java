@@ -31,7 +31,7 @@ public class CartService {
     }
 
 
-    public void updateCartItem(CartItemDto cartDto, User user, Product product){
+    public void updateCartItem(CartItemDto cartDto, User user){
         Cart cart = cartRepository.getOne(cartDto.getBasketId());
         cart.setQuantity(cartDto.getQuantity());
         cart.setCreatedDate(new Date());

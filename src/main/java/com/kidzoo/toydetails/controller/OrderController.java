@@ -32,7 +32,7 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestParam("basketId") UUID basketId, @RequestBody @Valid UserDetails userDetails)
+    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestHeader("basketId") UUID basketId, @RequestBody UserDetails userDetails)
     throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);

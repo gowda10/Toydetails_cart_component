@@ -38,7 +38,7 @@ public class OrderItem {
 
     @JsonIgnore
     @OneToOne(targetEntity = Cart.class, fetch = FetchType.EAGER)
-    @JoinColumn(name = "basket_id")
+    @JoinColumn(name = "basket_id", referencedColumnName = "basketId")
     private Cart cart;
 
     public OrderItem(){}

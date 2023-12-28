@@ -75,9 +75,6 @@ public class OrderService {
             // add to order item list
             orderItemsRepository.save(orderItem);
         }
-
-
-
         UserDetails newUserDetails = new UserDetails();
         newUserDetails.getFirstName();
         newUserDetails.getLastName();
