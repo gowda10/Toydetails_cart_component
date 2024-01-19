@@ -3,6 +3,7 @@ package com.kidzoo.toydetails.controller;
 import com.kidzoo.toydetails.common.ApiResponse;
 import com.kidzoo.toydetails.dto.checkout.CheckoutItemDto;
 import com.kidzoo.toydetails.dto.checkout.StripeResponse;
+import com.kidzoo.toydetails.dto.user.UserDetailsDto;
 import com.kidzoo.toydetails.exception.*;
 import com.kidzoo.toydetails.model.Order;
 import com.kidzoo.toydetails.model.User;
@@ -32,14 +33,14 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestHeader("basketId") UUID basketId, @RequestBody UserDetails userDetails)
+    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestHeader("Id") Integer id, @RequestBody @Valid UserDetails userDetails)
     throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);
         // retrieve user
         User user = authenticationService.getUser(token);
         // place the order
-        orderService.placeOrder(user, basketId, userDetails);
+        orderService.placeOrder(user, id, userDetails);
         return new ResponseEntity<>(new ApiResponse(true, "Order has been placed"), HttpStatus.CREATED);
     }
 

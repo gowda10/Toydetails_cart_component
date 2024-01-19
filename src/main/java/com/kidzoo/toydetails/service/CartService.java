@@ -1,11 +1,15 @@
 package com.kidzoo.toydetails.service;
 
+import com.kidzoo.toydetails.dto.ResponseDto;
 import com.kidzoo.toydetails.dto.cart.AddToCartDto;
 import com.kidzoo.toydetails.dto.cart.CartDto;
 import com.kidzoo.toydetails.dto.cart.CartItemDto;
+import com.kidzoo.toydetails.dto.user.GuestUserDto;
 import com.kidzoo.toydetails.exception.CartItemNotExistException;
+import com.kidzoo.toydetails.exception.CustomException;
 import com.kidzoo.toydetails.model.*;
 import com.kidzoo.toydetails.repository.CartRepository;
+import com.kidzoo.toydetails.utils.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,9 @@ public class CartService {
     @Autowired
     private  CartRepository cartRepository;
 
+    @Autowired
+    private BasketIdService basketIdService;
+
 
     public void addToCart(AddToCartDto addToCartDto, Product product, User user){
         Cart cart = new Cart(product, addToCartDto.getQuantity(), user);
@@ -32,7 +39,7 @@ public class CartService {
 
 
     public void updateCartItem(CartItemDto cartDto, User user){
-        Cart cart = cartRepository.getOne(cartDto.getBasketId());
+        Cart cart = cartRepository.getOne(cartDto.getId());
         cart.setQuantity(cartDto.getQuantity());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
@@ -60,12 +67,14 @@ public class CartService {
 
 
 
-    public void deleteCartItem(UUID basketId, int userId) throws CartItemNotExistException {
-        if (!cartRepository.existsById(basketId))
-            throw new CartItemNotExistException("Cart id is invalid:" + basketId);
-        cartRepository.deleteById(basketId);
+    public void deleteCartItem(Integer id, int userId) throws CartItemNotExistException {
+        if (!cartRepository.existsById(id))
+            throw new CartItemNotExistException("Cart id is invalid:" + id);
+        cartRepository.deleteById(id);
 
     }
+
+
 
     public void deleteCartItems(int userId) {
         cartRepository.deleteAll();

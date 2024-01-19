@@ -1,7 +1,6 @@
 package com.kidzoo.toydetails.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kidzoo.toydetails.repository.CartRepository;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -12,8 +11,9 @@ import java.util.UUID;
 public class Cart {
 
     @Id
-    @GeneratedValue()
-    private UUID basketId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
 
     @Column(name = "created_date")
@@ -22,6 +22,7 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
 
     @JsonIgnore
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
@@ -34,19 +35,19 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Product product, int quantity, User user){
+    public Cart(Product product, int quantity, User user) {
         this.user = user;
         this.product = product;
         this.quantity = quantity;
         this.createdDate = new Date();
     }
 
-    public UUID getBasketId() {
-        return basketId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setBasketId(UUID basketId) {
-        this.basketId = basketId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public User getUser() {
@@ -80,4 +81,5 @@ public class Cart {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
 }

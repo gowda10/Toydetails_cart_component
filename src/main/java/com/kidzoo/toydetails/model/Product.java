@@ -25,10 +25,6 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     Category category;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
-    private List<WishList> wishListList;
-
 
     @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product")

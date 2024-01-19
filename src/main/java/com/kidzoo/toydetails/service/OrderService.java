@@ -1,5 +1,6 @@
 package com.kidzoo.toydetails.service;
 
+import com.kidzoo.toydetails.dto.user.UserDetailsDto;
 import com.kidzoo.toydetails.model.Order;
 import com.kidzoo.toydetails.model.UserDetails;
 import com.kidzoo.toydetails.repository.UserDetailsRepository;
@@ -51,7 +52,7 @@ public class OrderService {
                 .build();
     }
 
-    public void placeOrder(User user, UUID basketId, UserDetails userDetails) {
+    public void placeOrder(User user, Integer id, UserDetails userDetails) {
         // first let get cart items for the user
         CartDto cartDto = cartService.listCartItems(user);
 
@@ -75,13 +76,7 @@ public class OrderService {
             // add to order item list
             orderItemsRepository.save(orderItem);
         }
-        UserDetails newUserDetails = new UserDetails();
-        newUserDetails.getFirstName();
-        newUserDetails.getLastName();
-        newUserDetails.getEmail();
-        newUserDetails.getShipAdd();
-        newUserDetails.getBillAdd();
-        userDetailsRepository.save(newUserDetails);
+        cartService.deleteUserCartItems(user);
 
     }
 

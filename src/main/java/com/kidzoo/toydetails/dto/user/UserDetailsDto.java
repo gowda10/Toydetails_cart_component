@@ -1,19 +1,30 @@
 package com.kidzoo.toydetails.dto.user;
 
 
+import javax.validation.constraints.NotNull;
+
 public class UserDetailsDto {
 
     private Integer uNo;
 
-    private  String firstName;
+    private @NotNull String firstName;
 
-    private  String lastName;
+    private @NotNull String lastName;
 
-    private  String email;
+    private @NotNull String email;
 
-    private  String billAdd;
+    private @NotNull String billAdd;
 
-    private  String shipAdd;
+    private @NotNull String shipAdd;
+
+    public UserDetailsDto(String firstName, String lastName, String email, String billAdd, String shipAdd) {
+        this.uNo = uNo;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.billAdd = billAdd;
+        this.shipAdd = shipAdd;
+    }
 
     public Integer getuNo() {
         return uNo;

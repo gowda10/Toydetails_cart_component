@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, UUID> {
+public interface CartRepository extends JpaRepository<Cart, Integer> {
 
     List<Cart> findAllByUserOrderByCreatedDateDesc(User user);
 

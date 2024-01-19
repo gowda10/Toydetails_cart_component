@@ -1,12 +1,10 @@
 package com.kidzoo.toydetails.dto.cart;
 
-import com.kidzoo.toydetails.model.Cart;
-
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class AddToCartDto {
-    private UUID basketId;
+    private int id;
 
     private @NotNull Integer productId;
     private @NotNull Integer quantity;
@@ -14,11 +12,11 @@ public class AddToCartDto {
     public AddToCartDto() {
     }
 
-    public UUID getBasketId() {
-        return basketId;
+    public int getId() {
+        return id;
     }
 
-    public void setBasketId(UUID basketId) {this.basketId = basketId;}
+    public void setId(int id) {this.id = id;}
 
     public Integer getProductId() {
         return productId;
