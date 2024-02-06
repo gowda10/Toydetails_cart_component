@@ -62,10 +62,10 @@ public class CartController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteCartItem(@RequestHeader(value = "id") Integer id, @RequestHeader(value = "token") String token) throws AuthenticationFailException, CartItemNotExistException {
+    public ResponseEntity<ApiResponse> deleteCartItem(@RequestHeader(value = "basketId") Integer basketId, @RequestHeader(value = "token") String token) throws AuthenticationFailException, CartItemNotExistException {
         authenticationService.authenticate(token);
         int userId = authenticationService.getUser(token).getId();
-        cartService.deleteCartItem(id, userId);
+        cartService.deleteCartItem(basketId, userId);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"), HttpStatus.OK);
     }
 

@@ -1,42 +1,32 @@
-package com.kidzoo.toydetails.model;
+package com.kidzoo.toydetails.dto.personalDetails;
 
-import com.kidzoo.toydetails.enums.Role;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "Details")
-public class UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "U_No")
-    private Integer uNo;
-    @Column(name = "first_name")
+public class personalDetailsDto {
     private @NotNull String firstName;
 
-    @Column(name = "last_name")
     private @NotNull String lastName;
 
-    @Column(name = "email")
     private @NotNull String email;
 
-    @Column(name = "billing_address")
     private @NotNull String billAdd;
 
-    @Column(name = "shipping_address")
     private @NotNull String shipAdd;
 
-
-
-
+    public personalDetailsDto(String firstName, String lastName, String email, String billAdd, String shipAdd) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.billAdd = billAdd;
+        this.shipAdd = shipAdd;
+    }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public UserDetails setFirstName(String firstName) {
+    public personalDetailsDto setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -45,7 +35,7 @@ public class UserDetails {
         return lastName;
     }
 
-    public UserDetails setLastName(String lastName) {
+    public personalDetailsDto setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -54,7 +44,7 @@ public class UserDetails {
         return email;
     }
 
-    public UserDetails setEmail(String email) {
+    public personalDetailsDto setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -63,7 +53,7 @@ public class UserDetails {
         return billAdd;
     }
 
-    public UserDetails setBillAdd(String billAdd) {
+    public personalDetailsDto setBillAdd(String billAdd) {
         this.billAdd = billAdd;
         return this;
     }
@@ -72,9 +62,8 @@ public class UserDetails {
         return shipAdd;
     }
 
-    public UserDetails setShipAdd(String shipAdd) {
+    public personalDetailsDto setShipAdd(String shipAdd) {
         this.shipAdd = shipAdd;
         return this;
     }
-
 }

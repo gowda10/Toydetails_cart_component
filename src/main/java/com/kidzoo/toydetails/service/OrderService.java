@@ -1,12 +1,8 @@
 package com.kidzoo.toydetails.service;
 
-import com.kidzoo.toydetails.dto.user.UserDetailsDto;
 import com.kidzoo.toydetails.model.Order;
-import com.kidzoo.toydetails.model.UserDetails;
+import com.kidzoo.toydetails.model.personalDetails;
 import com.kidzoo.toydetails.repository.UserDetailsRepository;
-import com.stripe.Stripe;
-import com.stripe.exception.StripeException;
-import com.stripe.model.checkout.Session;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.kidzoo.toydetails.dto.cart.CartDto;
 import com.kidzoo.toydetails.dto.cart.CartItemDto;
@@ -17,11 +13,9 @@ import com.kidzoo.toydetails.model.User;
 import com.kidzoo.toydetails.repository.OrderItemsRepository;
 import com.kidzoo.toydetails.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Service
@@ -52,7 +46,7 @@ public class OrderService {
                 .build();
     }
 
-    public void placeOrder(User user, Integer id, UserDetails userDetails) {
+    public void placeOrder(User user, Integer basketId) {
         // first let get cart items for the user
         CartDto cartDto = cartService.listCartItems(user);
 

@@ -3,17 +3,18 @@ package com.kidzoo.toydetails.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name="cart")
-public class Cart {
+public class Cart{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @Column(name = "basketId")
+    private Integer basketId;
 
 
     @Column(name = "created_date")
@@ -42,12 +43,12 @@ public class Cart {
         this.createdDate = new Date();
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getBasketId() {
+        return basketId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setBasketId(Integer basketId) {
+        this.basketId = basketId;
     }
 
     public User getUser() {

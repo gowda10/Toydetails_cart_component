@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 public class CartItemDto {
-    private @NotNull Integer id;
+    private @NotNull Integer basketId;
     private @NotNull Integer quantity;
     private @NotNull Product product;
 
@@ -16,7 +16,7 @@ public class CartItemDto {
     }
 
     public CartItemDto(Cart cart) {
-        this.setId(cart.getId());
+        this.setBasketId(cart.getBasketId());
         this.setQuantity(cart.getQuantity());
         this.setProduct(cart.getProduct());
     }
@@ -24,7 +24,7 @@ public class CartItemDto {
     @Override
     public String toString() {
         return "CartDto{" +
-                "id=" + id +
+                "basketId=" + basketId +
                 ", quantity=" + quantity +
                 ", product=" + product +
                 '}';
@@ -45,12 +45,12 @@ public class CartItemDto {
         this.product = product;
     }
 
-    public int getId() {
-        return id;
+    public Integer getBasketId() {
+        return basketId;
     }
 
-    public CartItemDto setId(int id) {
-        this.id = id;
+    public CartItemDto setBasketId(Integer basketId) {
+        this.basketId = basketId;
         return this;
     }
 }
