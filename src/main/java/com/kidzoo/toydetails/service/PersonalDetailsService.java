@@ -8,6 +8,9 @@ import com.kidzoo.toydetails.repository.PersonalDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class PersonalDetailsService {
 
@@ -18,16 +21,14 @@ public class PersonalDetailsService {
     public PersonalDetails getPersonalDetailsByUser(User user){
         return personalDetailsRepository.findByUser(user);
     }
-
-        public PersonalDetails addPersonalDetails(User user, PersonalDetailsDto personalDetailsDto) {
-            PersonalDetails personalDetails = new PersonalDetails();
-            personalDetails.setUser(user);
-            personalDetails.setFirstName(personalDetailsDto.getFirstName());
-            personalDetails.setLastName(personalDetailsDto.getLastName());
-            personalDetails.setEmail(personalDetailsDto.getEmail());
-            personalDetails.setPhoneNumber(personalDetailsDto.getPhoneNumber());
-            personalDetails.setAddress(personalDetailsDto.getAddress());
-            return personalDetailsRepository.save(personalDetails);
+    public PersonalDetails addPersonalDetails(User user, PersonalDetailsDto personalDetailsDto) {
+           PersonalDetails personalDetails = new PersonalDetails();
+           personalDetails.setUser(user);
+           personalDetails.setFirstName(personalDetailsDto.getFirstName());
+           personalDetails.setLastName(personalDetailsDto.getLastName());
+           personalDetails.setEmail(personalDetailsDto.getEmail());
+           personalDetails.setPhoneNumber(personalDetailsDto.getPhoneNumber());
+           personalDetails.setAddress(personalDetailsDto.getAddress());
+        return personalDetailsRepository.save(personalDetails);
         }
-
-    }
+}

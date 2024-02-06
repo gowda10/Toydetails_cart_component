@@ -1,6 +1,8 @@
 package com.kidzoo.toydetails.dto.personalDetails;
 
 
+import com.kidzoo.toydetails.model.PersonalDetails;
+
 import javax.validation.constraints.NotNull;
 
 public class PersonalDetailsDto {
@@ -23,17 +25,6 @@ public class PersonalDetailsDto {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "PersonalDetails{" +
-                "firstName=" + firstName +
-                ", lastName=" + lastName +
-                ", email=" + email +
-                ", phoneNumber=" + phoneNumber +
-                ", address=" + address +
-                '}';
     }
 
     public String getFirstName() {

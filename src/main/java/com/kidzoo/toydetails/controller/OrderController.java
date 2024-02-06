@@ -1,11 +1,14 @@
 package com.kidzoo.toydetails.controller;
 
 import com.kidzoo.toydetails.common.ApiResponse;
+import com.kidzoo.toydetails.dto.personalDetails.PersonalDetailsDto;
 import com.kidzoo.toydetails.exception.*;
 import com.kidzoo.toydetails.model.Order;
+import com.kidzoo.toydetails.model.PersonalDetails;
 import com.kidzoo.toydetails.model.User;
 import com.kidzoo.toydetails.service.AuthenticationService;
 import com.kidzoo.toydetails.service.OrderService;
+import com.kidzoo.toydetails.service.PersonalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ import java.util.UUID;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private PersonalDetailsService personalDetailsService;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -47,7 +53,7 @@ public class OrderController {
         // get orders
         List<Order> orderDtoList = orderService.listOrders(user);
 
-        return new ResponseEntity<>(orderDtoList, HttpStatus.OK);
+        return new ResponseEntity<>(orderDtoList,HttpStatus.OK);
     }
 
 

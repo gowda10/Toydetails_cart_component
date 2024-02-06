@@ -8,7 +8,11 @@ import com.kidzoo.toydetails.model.User;
 import com.kidzoo.toydetails.service.AuthenticationService;
 import com.kidzoo.toydetails.service.PersonalDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/toydetails/v1/personal-details")
