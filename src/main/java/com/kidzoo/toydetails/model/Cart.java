@@ -1,6 +1,7 @@
 package com.kidzoo.toydetails.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,10 +13,10 @@ import java.util.UUID;
 public class Cart{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "basketId")
-    private Integer basketId;
-
+    private UUID basketId;
 
     @Column(name = "created_date")
     private Date createdDate;
@@ -26,7 +27,7 @@ public class Cart{
 
 
     @JsonIgnore
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
@@ -42,12 +43,11 @@ public class Cart{
         this.quantity = quantity;
         this.createdDate = new Date();
     }
-
-    public Integer getBasketId() {
+    public UUID getBasketId() {
         return basketId;
     }
 
-    public void setBasketId(Integer basketId) {
+    public void setBasketId(UUID basketId) {
         this.basketId = basketId;
     }
 

@@ -1,8 +1,8 @@
 package com.kidzoo.toydetails.service;
 
+import com.kidzoo.toydetails.exception.CustomException;
 import com.kidzoo.toydetails.model.Order;
-import com.kidzoo.toydetails.model.personalDetails;
-import com.kidzoo.toydetails.repository.UserDetailsRepository;
+import com.kidzoo.toydetails.model.PersonalDetails;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.kidzoo.toydetails.dto.cart.CartDto;
 import com.kidzoo.toydetails.dto.cart.CartItemDto;
@@ -32,7 +32,7 @@ public class OrderService {
     OrderItemsRepository orderItemsRepository;
 
     @Autowired
-    UserDetailsRepository userDetailsRepository;
+    PersonalDetailsService personalDetailsService;
 
     // create total price
     SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
@@ -46,9 +46,13 @@ public class OrderService {
                 .build();
     }
 
-    public void placeOrder(User user, Integer basketId) {
+    public void placeOrder(User user, UUID basketId) {
+        PersonalDetails personalDetails = personalDetailsService.getPersonalDetailsByUser(user);
+        if (personalDetails == null) {
+            throw new CustomException("User has not provided personal details.");
+        }
         // first let get cart items for the user
-        CartDto cartDto = cartService.listCartItems(user);
+        CartDto cartDto = cartService.listCartItems(user, basketId);
 
         List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
 
@@ -70,14 +74,13 @@ public class OrderService {
             // add to order item list
             orderItemsRepository.save(orderItem);
         }
-        cartService.deleteUserCartItems(user);
+        cartService.deleteCartItems(user.getId());
 
     }
 
     public List<Order> listOrders(User user) {
         return orderRepository.findAllByUserOrderByCreatedDateDesc(user);
     }
-
 
     public Order getOrder(Integer orderId) throws OrderNotFoundException {
         Optional<Order> order = orderRepository.findById(orderId);
@@ -87,5 +90,3 @@ public class OrderService {
         throw new OrderNotFoundException("Order not found");
     }
 }
-
-

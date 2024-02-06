@@ -41,20 +41,20 @@ public class CartController {
         Product product = productService.getProductById(addToCartDto.getProductId());
         System.out.println("product to add"+  product.getName());
         cartService.addToCart(addToCartDto, product, user);
-        CartDto cartDto = cartService.listCartItems(user);
+        CartDto cartDto = cartService.listCartItem(user);
         return new ResponseEntity<CartDto>(cartDto,HttpStatus.OK);
 
     }
     @GetMapping("/get-cartItems")
-    public ResponseEntity<CartDto> getCartItems(@RequestHeader(value = "token") String token) throws AuthenticationFailException {
+    public ResponseEntity<CartDto> getCartItems(@RequestHeader(value = "token") String token, @RequestHeader(value = "basketId") UUID basketId) throws AuthenticationFailException {
         authenticationService.authenticate(token);
         User user = authenticationService.getUser(token);
-        CartDto cartDto = cartService.listCartItems(user);
+        CartDto cartDto = cartService.listCartItems(user, basketId);
         return new ResponseEntity<CartDto>(cartDto,HttpStatus.OK);
     }
     @PutMapping("/update")
     public ResponseEntity<ApiResponse> updateCartItem(@RequestBody @Valid CartItemDto cartDto,
-                                                      @RequestHeader(value = "token") String token) throws AuthenticationFailException,ProductNotExistException {
+                                                      @RequestHeader(value = "token") String token, @RequestHeader(value = "basketId") UUID basketId ) throws AuthenticationFailException,ProductNotExistException {
         authenticationService.authenticate(token);
         User user = authenticationService.getUser(token);
         cartService.updateCartItem(cartDto, user);
@@ -62,10 +62,10 @@ public class CartController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<ApiResponse> deleteCartItem(@RequestHeader(value = "basketId") Integer basketId, @RequestHeader(value = "token") String token) throws AuthenticationFailException, CartItemNotExistException {
+    public ResponseEntity<ApiResponse> deleteCartItem(@RequestHeader(value = "basketId") UUID basketId, @RequestHeader(value = "token") String token) throws AuthenticationFailException, CartItemNotExistException {
         authenticationService.authenticate(token);
-        int userId = authenticationService.getUser(token).getId();
-        cartService.deleteCartItem(basketId, userId);
+        User user = authenticationService.getUser(token);
+        cartService.deleteCartItem(basketId, user);
         return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Item has been removed"), HttpStatus.OK);
     }
 

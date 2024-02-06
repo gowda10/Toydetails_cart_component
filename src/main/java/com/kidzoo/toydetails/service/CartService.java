@@ -23,9 +23,6 @@ public class CartService {
     @Autowired
     private  CartRepository cartRepository;
 
-    @Autowired
-    private BasketIdService basketIdService;
-
 
     public void addToCart(AddToCartDto addToCartDto, Product product, User user){
         Cart cart = new Cart(product, addToCartDto.getQuantity(), user);
@@ -34,14 +31,26 @@ public class CartService {
 
 
     public void updateCartItem(CartItemDto cartDto, User user){
-        Cart cart = cartRepository.getOne(cartDto.getBasketId());
+        UUID basketId = cartDto.getBasketId();
+        Cart cart = cartRepository.findById(basketId).orElseThrow(() -> new CartItemNotExistException("BasketId is invalid" + basketId));
         cart.setQuantity(cartDto.getQuantity());
         cart.setCreatedDate(new Date());
         cartRepository.save(cart);
     }
 
+    public CartDto listCartItem(User user) {
+        List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
+        List<CartItemDto> cartItems = new ArrayList<>();
+        for (Cart cart : cartList) {
+            CartItemDto cartItemDto = getDtoFromCart(cart);
+            cartItems.add(cartItemDto);
+        }
+        return new CartDto(cartItems);
+    }
 
-    public CartDto listCartItems(User user) {
+
+    public CartDto listCartItems(User user, UUID basketId) {
+        Cart carts = cartRepository.findById(basketId).orElseThrow(() -> new CartItemNotExistException("BasketId is invalid" + basketId));
         List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
         List<CartItemDto> cartItems = new ArrayList<>();
         for (Cart cart:cartList){
@@ -62,10 +71,10 @@ public class CartService {
 
 
 
-    public void deleteCartItem(Integer basketId, int userId) throws CartItemNotExistException {
+    public void deleteCartItem(UUID basketId, User user) throws CartItemNotExistException {
         if (!cartRepository.existsById(basketId))
             throw new CartItemNotExistException("Cart id is invalid:" + basketId);
-        cartRepository.deleteById(basketId);
+        cartRepository.deleteByBasketIdAndUser(basketId, user);
 
     }
 
@@ -76,8 +85,8 @@ public class CartService {
     }
 
 
-    public void deleteUserCartItems(User user) {
-        cartRepository.deleteByUser(user);
+    public void deleteUserCartItems(User user, UUID basketId) {
+        cartRepository.deleteByBasketIdAndUser(basketId, user);
     }
 }
 

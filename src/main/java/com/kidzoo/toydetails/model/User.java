@@ -2,7 +2,6 @@ package com.kidzoo.toydetails.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kidzoo.toydetails.dto.user.GuestUserDto;
 import com.kidzoo.toydetails.enums.Role;
 
 import javax.persistence.*;
@@ -31,12 +30,22 @@ public class User {
     @Column(name = "password")
     private String password;
 
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Order> orders;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user",
-            fetch = FetchType.LAZY)
-    private List<Order> orders;
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Cart cart;
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public User setCart(Cart cart) {
+        this.cart = cart;
+        return this;
+    }
 
     public User(String firstName) {
     }

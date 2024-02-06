@@ -1,11 +1,9 @@
 package com.kidzoo.toydetails.controller;
 
 import com.kidzoo.toydetails.common.ApiResponse;
-import com.kidzoo.toydetails.dto.personalDetails.personalDetailsDto;
 import com.kidzoo.toydetails.exception.*;
 import com.kidzoo.toydetails.model.Order;
 import com.kidzoo.toydetails.model.User;
-import com.kidzoo.toydetails.model.personalDetails;
 import com.kidzoo.toydetails.service.AuthenticationService;
 import com.kidzoo.toydetails.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/toydetails/v1/order")
@@ -28,7 +26,7 @@ public class OrderController {
 
     // place order after checkout
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestHeader("BasketId") Integer basketId)
+    public ResponseEntity<ApiResponse> placeOrder(@RequestHeader("token") String token, @RequestHeader("BasketId") UUID basketId)
     throws AuthenticationFailException {
         // validate token
         authenticationService.authenticate(token);

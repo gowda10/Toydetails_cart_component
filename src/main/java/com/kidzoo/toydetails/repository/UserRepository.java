@@ -1,6 +1,7 @@
 package com.kidzoo.toydetails.repository;
 
 
+import com.kidzoo.toydetails.model.PersonalDetails;
 import com.kidzoo.toydetails.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findByEmail(String email);
 
-    User findUserByEmail(String email);
 }

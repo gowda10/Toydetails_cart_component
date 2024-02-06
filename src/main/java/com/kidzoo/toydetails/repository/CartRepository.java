@@ -9,11 +9,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface CartRepository extends JpaRepository<Cart, Integer> {
+public interface CartRepository extends JpaRepository<Cart, UUID> {
 
     List<Cart> findAllByUserOrderByCreatedDateDesc(User user);
 
     List<Cart> deleteByUser(User user);
 
+    void deleteByBasketIdAndUser(UUID basketId, User user);
 }
 
