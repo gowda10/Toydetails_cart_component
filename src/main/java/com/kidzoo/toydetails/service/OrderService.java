@@ -1,15 +1,12 @@
 package com.kidzoo.toydetails.service;
 
 import com.kidzoo.toydetails.exception.CustomException;
-import com.kidzoo.toydetails.model.Order;
-import com.kidzoo.toydetails.model.PersonalDetails;
+import com.kidzoo.toydetails.model.*;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.kidzoo.toydetails.dto.cart.CartDto;
 import com.kidzoo.toydetails.dto.cart.CartItemDto;
 import com.kidzoo.toydetails.dto.checkout.CheckoutItemDto;
 import com.kidzoo.toydetails.exception.OrderNotFoundException;
-import com.kidzoo.toydetails.model.OrderItem;
-import com.kidzoo.toydetails.model.User;
 import com.kidzoo.toydetails.repository.OrderItemsRepository;
 import com.kidzoo.toydetails.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +31,9 @@ public class OrderService {
     @Autowired
     PersonalDetailsService personalDetailsService;
 
+    @Autowired
+    BankDetailsService bankDetailsService;
+
     // create total price
     SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemDto checkoutItemDto) {
         return SessionCreateParams.LineItem.PriceData.builder()
@@ -51,7 +51,11 @@ public class OrderService {
         if (personalDetails == null) {
             throw new CustomException("User has not provided personal details.");
         }
-        // first let get cart items for the user
+        BankDetails bankDetails = bankDetailsService.getBankDetailsByUser(user);
+        if (bankDetails == null) {
+            throw new CustomException("User has not provided Bank details.");
+        }
+//         first let get cart items for the user
         CartDto cartDto = cartService.listCartItems(user, basketId);
 
         List<CartItemDto> cartItemDtoList = cartDto.getCartItems();
@@ -74,8 +78,7 @@ public class OrderService {
             // add to order item list
             orderItemsRepository.save(orderItem);
         }
-        cartService.deleteCartItems(user.getId());
-
+        cartService.deleteCartItemsByUser(user);
     }
 
     public List<Order> listOrders(User user) {

@@ -38,6 +38,19 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Cart cart;
 
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private BankDetails bankDetails;
+
+    public BankDetails getBankDetails() {
+        return bankDetails;
+    }
+
+    public User setBankDetails(BankDetails bankDetails) {
+        this.bankDetails = bankDetails;
+        return this;
+    }
+
     public Cart getCart() {
         return cart;
     }

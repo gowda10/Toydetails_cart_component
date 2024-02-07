@@ -4,16 +4,14 @@ import com.kidzoo.toydetails.dto.cart.AddToCartDto;
 import com.kidzoo.toydetails.dto.cart.CartDto;
 import com.kidzoo.toydetails.dto.cart.CartItemDto;
 import com.kidzoo.toydetails.exception.CartItemNotExistException;
+import com.kidzoo.toydetails.exception.CustomException;
 import com.kidzoo.toydetails.model.*;
 import com.kidzoo.toydetails.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Transactional
@@ -72,11 +70,23 @@ public class CartService {
 
 
     public void deleteCartItem(UUID basketId, User user) throws CartItemNotExistException {
-        if (!cartRepository.existsById(basketId))
-            throw new CartItemNotExistException("Cart id is invalid:" + basketId);
-        cartRepository.deleteByBasketIdAndUser(basketId, user);
-
+     if (!cartRepository.existsById(basketId)) {
+        throw new CartItemNotExistException("Cart id is invalid:" + basketId);
+     }
+     cartRepository.deleteByBasketIdAndUser(basketId, user);
     }
+
+
+    public void deleteCartItemsByUser(User user) throws CartItemNotExistException {
+        List<Cart> cartList = cartRepository.findAllByUser(user);
+
+        if (cartList.isEmpty()) {
+            throw new CartItemNotExistException("No cart items found for user with id: " + user.getId());
+        }
+
+        cartRepository.deleteAll(cartList);
+    }
+
 
 
 
